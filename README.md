@@ -4,4 +4,4 @@ This repository is dedicated to learning and practicing Golang (Go programming l
 
 🎯 **Goal:** Master Golang to excel in **backend development**, **DevOps tools**, and **security tools**!
 
-![Golang Logo](golang-logo.png)
+![Golang Logo](images/golang-logo.png)
