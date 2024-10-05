@@ -5,7 +5,7 @@ import (
 	t "time"
 )
 
-func main() {
+func printAsciiDog() {
 	fmt.Println("  __      _")
 	fmt.Println("o'')}____//")
 	fmt.Println(" `_/      )")
