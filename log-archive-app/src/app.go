@@ -6,6 +6,7 @@ import (
 	"flag"
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"path/filepath"
 	"time"
@@ -14,14 +15,13 @@ import (
 func main() {
 	// Parse command line argument
 	logDir := flag.String("log-directory", "/var/log", "Directory containing logs to archive")
+	perm := flag.Int("directory-permission", 0755, "Directory permission")
 	flag.Parse()
 
 	// Create archive directory
 	archiveDir := filepath.Join(*logDir, "archive")
-	err := os.MkdirAll(archiveDir, 0755) // Create directory with read/write/execute permissions for owner and read/execute permissions for group and others
-	if err != nil {
-		fmt.Printf("Error creating archive directory: %v\n", err) // Print error message
-		return
+	if err := os.MkdirAll(archiveDir, os.FileMode(*perm)); err != nil { // Create directory with read/write/execute permissions for owner and read/execute permissions for group and others
+		log.Fatalf("Error creating archive directory %v: %v", archiveDir, err) // Log error message and exit program
 	}
 
 	// Create tar.gz file
@@ -49,18 +49,18 @@ func main() {
 		}
 
 		// Open the file
-		file, err := os.Open(path)
+		file, err := os.Open(path) // Open file
 		if err != nil {
 			return err
 		}
 		defer file.Close()
 
 		// Create tar header
-		header, err := tar.FileInfoHeader(info, info.Name())
+		header, err := tar.FileInfoHeader(info, info.Name()) // Create header from file info
 		if err != nil {
 			return err
 		}
-		header.Name = filepath.Join(filepath.Base(*logDir), info.Name())
+		header.Name = filepath.Join(filepath.Base(*logDir), info.Name()) // Set file name in tar archive
 
 		// Write header
 		if err := tw.WriteHeader(header); err != nil {
