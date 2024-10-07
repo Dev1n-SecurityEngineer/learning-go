@@ -1,6 +1,6 @@
-### Log Archiving Tool 🚀
+# Log Archiving Tool 🚀
 
-#### Overview
+## Overview
 
 The Log Archiving Tool is a powerful command-line utility designed to streamline your log management process. By compressing and archiving log files from a specified directory, this tool helps you:
 
