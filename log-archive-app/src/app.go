@@ -48,6 +48,13 @@ func main() {
 			return nil
 		}
 
+		// Skip files larger than 8GB
+		const maxFileSize = 8 * 1024 * 1024 * 1024 // 8GB
+		if info.Size() > maxFileSize {
+			log.Printf("Skipping large file: %s (size: %d bytes)\n", path, info.Size())
+			return nil
+		}
+
 		// Open the file
 		file, err := os.Open(path) // Open file
 		if err != nil {
